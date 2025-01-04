@@ -17,6 +17,7 @@ This is for educational purposes.
 |Demo| Description|
 |---|---|
 |[00_core_clock](./00_core_clk/README.md)|Core and bus clock configurations and core clock speed test|
+|[01_systick](./01_systick/README.md)|Systick 1 ms interrupt configuration|
 
 ## References
 See the references under doc folder.
@@ -31,3 +32,4 @@ See the references under doc folder.
 |HSI|High Speed Internal Oscillator|
 |AHB|Advanced High Performance Bus|
 |GPIO|General Purpose Input Output|
+|NVIC|Nested Vector Interrupt Controller|
