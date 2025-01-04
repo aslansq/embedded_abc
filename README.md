@@ -1,3 +1,5 @@
+![all_builds](https://github.com/aslansq/embedded_abc/actions/workflows/c-cpp.yml/badge.svg)
+
 # embedded_abc
 This repository contains minimal demos of stm32f0discovery's peripherals with CMSIS.
 
