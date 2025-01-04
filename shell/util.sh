@@ -1,7 +1,8 @@
 #!/bin/bash
 
 demos="\
-00_core_clk"
+00_core_clk \
+01_systick"
 
 getMacros()
 {
