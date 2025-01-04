@@ -2,10 +2,10 @@
 #include "stm32f0xx.h"
 #include <assert.h>
 
-#define CORE_CLK_FREQ (48*10e6)
-#define SYSTICK_FREQ  (10e3)
-
+// SystemInit is called before main
+// called from startup_stm32f051r8tx.s
 void SystemInit(void) {
+	// todo: explain why we need to do this
 	// prefetch buffer enable
 	FLASH->ACR |= FLASH_ACR_PRFTBE;
 
@@ -15,16 +15,21 @@ void SystemInit(void) {
 		;
 	while((RCC->CR & RCC_CR_HSIRDY) == 0)
 		;
+	// rm00091 page 111
 	// zero HSITRIM
 	tmpreg = RCC->CR & (~RCC_CR_HSITRIM_Msk);
-	// set to default value. ref Page 111 of RM0091
+	// set to default value.
 	tmpreg |= (16 << RCC_CR_HSITRIM_Pos);
 	// now HSI SHOULD be 8MHz
 	RCC->CR = tmpreg;
 
 	// Hmm, it should be impossible that PLL is the source of system clock
 	assert(!((RCC->CFGR & RCC_CFGR_SWS) == RCC_CFGR_SWS_PLL));
-	// Disable PLL. We could not modify PLL config otherwise
+	// Disable PLL. We could not modify PLL config otherwise. Example:
+	// rm00091 page 113
+	// PLLMUL[3:0]: PLL multiplication factor
+	// These bits are written by software to define the PLL multiplication factor. These bits can be
+	// written only when PLL is disabled.
 	RCC->CR &= (~RCC_CR_PLLON);
 
 	// Wait for PLL to be disabled
@@ -55,6 +60,7 @@ void SystemInit(void) {
 	// wait for pll to be enabled
 	while((RCC->CR & RCC_CR_PLLRDY) == 0)
 		;
+	// todo: explain why we need to do this
 	// turns out you even need set flash latency
 	FLASH->ACR |= FLASH_ACR_LATENCY;
 	// wait for flash latency to be set or just wait forever I ll figure out a way to fix it
@@ -62,10 +68,13 @@ void SystemInit(void) {
 		;
 
 	// The AHB and the APB domains maximum frequency is 48 MHz.
+	// All buses are clocked at maximum frequency.
 	tmpreg = RCC->CFGR & (~RCC_CFGR_PPRE);
+	// APB prescaler is 1
 	tmpreg |= RCC_CFGR_PPRE_DIV1;
 	RCC->CFGR = tmpreg;
 	tmpreg = RCC->CFGR & (~RCC_CFGR_HPRE);
+	// AHB prescaler is 1
 	tmpreg |= RCC_CFGR_HPRE_DIV1;
 	RCC->CFGR = tmpreg;
 
@@ -75,22 +84,9 @@ void SystemInit(void) {
 	RCC->CFGR = tmpreg;
 }
 
-void _systick_init(void) {
-	// set reload value
-	SysTick->LOAD = (CORE_CLK_FREQ/SYSTICK_FREQ) - 1;
-	// set priority
-	NVIC_SetPriority(SysTick_IRQn, 0); // lowest priority
-	//enable systick
-	//The RCC feeds the Cortex System Timer (SysTick) external clock with the AHB clock
-	//(HCLK) divided by 8. The SysTick can work either with this clock or directly with the Cortex
-	//clock (HCLK), configurable in the SysTick Control and Status Register.
-	//see cortex m0 programming manual. SysTick control and status register (STK_CSR)
-	SysTick->CTRL = SysTick_CTRL_CLKSOURCE_Msk | SysTick_CTRL_TICKINT_Msk | SysTick_CTRL_ENABLE_Msk;
-}
-
 void _bsp_led_init(void) {
-	// ld4 : PC8
-	// ld3 : PC9
+	// ld4 : PC8 blue
+	// ld3 : PC9 yellow
 	// enable GPIOC
 	RCC->AHBENR |= RCC_AHBENR_GPIOCEN;
 	// set mode to output
@@ -104,9 +100,66 @@ void _bsp_led_init(void) {
 	GPIOC->PUPDR &= ~(GPIO_PUPDR_PUPDR8 | GPIO_PUPDR_PUPDR9);
 }
 
+// function to test core clock
+// this function is placed in ram so we dont have to worry about flash wait states
+// we will toggle PC8 and PC9
+// while loop should frequency should be 1MHz so led blinks at 500kHz
+__attribute__((section(".ramFunc"))) void _coreClockTest(void) {
+	uint32_t val = GPIOC->ODR;
+	// I tried to insert all instructions in assembly but it was doing weird things
+	// there are not a lot of ways compiler can optimize this code so expect it to be same every time
+	while (1){
+		//movs	r2, #192 // 1
+		//lsls	r2, r2, #2 // 1
+		val ^= 0x300; // 2
+		//eors	r3, r2 //1
+		//ldr	r2, .L16 //2
+		//str	r3, [r2, #20] //2
+		GPIOC->ODR = val; // 5
+		__asm__("nop");
+		__asm__("nop");
+		__asm__("nop");
+		__asm__("nop");
+		__asm__("nop");
+		__asm__("nop");
+		__asm__("nop");
+		__asm__("nop");
+		__asm__("nop");
+		__asm__("nop");
+		__asm__("nop");
+		__asm__("nop");
+		__asm__("nop");
+		__asm__("nop");
+		__asm__("nop");
+		__asm__("nop");
+		__asm__("nop");
+		__asm__("nop");
+		__asm__("nop");
+		__asm__("nop");
+		__asm__("nop");
+		__asm__("nop");
+		__asm__("nop");
+		__asm__("nop");
+		__asm__("nop");
+		__asm__("nop");
+		__asm__("nop");
+		__asm__("nop");
+		__asm__("nop");
+		__asm__("nop");
+		__asm__("nop");
+		__asm__("nop");
+		__asm__("nop");
+		__asm__("nop");
+		__asm__("nop");
+		__asm__("nop");
+		__asm__("nop");
+		__asm__("nop"); // 38
+	} //b	.L15 // 3
+}
+
 int main(void) {
-	_systick_init();
 	_bsp_led_init();
+	_coreClockTest();
 	while(1)
 		;
 }
@@ -128,10 +181,4 @@ void PendSV_Handler(void) {
 }
 
 void SysTick_Handler(void) {
-	static uint32_t counter = 0;
-	if(counter == 0) {
-		GPIOC->ODR ^= GPIO_ODR_8;
-		GPIOC->ODR = (GPIOC->ODR & GPIO_ODR_8) ? (GPIOC->ODR & ~GPIO_ODR_9) : (GPIOC->ODR | GPIO_ODR_9);
-	}
-	counter = (counter + 1) % 1000;
 }
