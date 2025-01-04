@@ -3,6 +3,8 @@
 # embedded_abc
 This repository contains minimal demos of stm32f0discovery's peripherals with CMSIS.
 
+![fun](./doc/boardFun.gif "fun")  
+
 ## Why?
 <mark>It will help you to make connection between datasheet and physical hardware.</mark>
 This is for educational purposes.
