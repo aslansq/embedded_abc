@@ -18,6 +18,7 @@ This is for educational purposes.
 |---|---|
 |[00_core_clock](./00_core_clk/README.md)|Core and bus clock configurations and core clock speed test|
 |[01_systick](./01_systick/README.md)|Systick 1 ms interrupt configuration|
+|[02_gpio_out](./02_gpio_out/README.md)|Explained how board led configuration is done|
 
 ## References
 See the references under doc folder.

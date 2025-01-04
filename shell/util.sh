@@ -2,7 +2,8 @@
 
 demos="\
 00_core_clk \
-01_systick"
+01_systick \
+02_gpio_out"
 
 getMacros()
 {
