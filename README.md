@@ -7,11 +7,22 @@ This repository contains minimal demos of stm32f0discovery's peripherals with CM
 
 ## Why?
 <mark>It will help you to make connection between datasheet and physical hardware.</mark>
-This is for educational purposes.
+This is for educational purposes. Main purpose is learning simple communication interfaces. No usb/ethernet :), those are too big to manually set registers. If I have enough time, I ll put more peripherals other than communication.
+
+|Goal|State|
+|-|-|
+|Spi|&#x2713;|
+|Uart|x|
+|I2C|x|
+
+|More|State|
+|-|-|
+|Systick|&#x2713;|
+|Gpio Out|&#x2713;|
 
 ## Design Choices
 * Every demo should be in a single main.c file
-* Every demo should be compilible by it is own. No shared resources between demos.
+* Every demo should be compilable by it is own. No shared resources between demos.
 * Only the lines that thought to be as tricky explained.
 * All above choices made to keep it simple.
 
@@ -21,6 +32,7 @@ This is for educational purposes.
 |[00_core_clock](./00_core_clk/README.md)|Core and bus clock configurations and core clock speed test|
 |[01_systick](./01_systick/README.md)|Systick 1 ms interrupt configuration|
 |[02_gpio_out](./02_gpio_out/README.md)|Explained how board led configuration is done|
+|[03_spi_bit_bang](./03_spi_bit_bang/README.md)|Simplest way to push data using SPI|
 
 ## References
 See the references under doc folder.
@@ -36,3 +48,4 @@ See the references under doc folder.
 |AHB|Advanced High Performance Bus|
 |GPIO|General Purpose Input Output|
 |NVIC|Nested Vector Interrupt Controller|
+|SPI|Serial Peripheral Interface|
