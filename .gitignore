@@ -4,3 +4,4 @@ build/
 .project
 .cproject
 .settings/
+config_default/

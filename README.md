@@ -13,7 +13,7 @@ This is for educational purposes. Main purpose is learning simple communication 
 |-|-|-|-|
 |Spi|&#x2713;|[03_spi_bit_bang](./03_spi_bit_bang/README.md)|Simplest way to push data with SPI|
 |Uart|&#x2713;|[04_uart](./04_uart/README.md)|Pushing data with UART|
-|I2C|x||Need to find pull-up resistor|
+|I2C|&#x2713;|[05_i2c](./05_i2c/README.md)|Pushing data to I2C bus(note: slave is faked)|
 |LIN|x||Need to find pull-up resistor|
 
 |More|State|Demo|Description|

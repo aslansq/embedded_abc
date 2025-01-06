@@ -5,7 +5,8 @@ demos="\
 01_systick \
 02_gpio_out \
 03_spi_bit_bang \
-04_uart"
+04_uart \
+05_i2c"
 
 getMacros()
 {
