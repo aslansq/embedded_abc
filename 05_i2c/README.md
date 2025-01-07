@@ -5,6 +5,16 @@ This is a demo for pushing data to I2C network. No external pull up resistor are
 * PB11 I2C2_SDA
 * PB12 Fake Slave. Connect this to I2C2_SDA.
 
+## Steps
+1. Choose a pin with I2C which is not already in use.
+![datasheetPin.png](./doc/datasheetPin.png "datasheetPin.png")  
+2. Learn alternate function  
+![alternateFunc.png](./doc/alternateFunc.png "alternateFunc.png")  
+3. Learn the bus
+![i2cBus.png](./doc/i2cBus.png "i2cBus.png")  
+4. Read reference manual I suggested first functional description. Then you could continue reading what registers does. See _i2c2_periph_init what you need for minimum implementation.
+![i2cmastermode.png](./doc/i2cmastermode.png "i2cmastermode.png")  
+
 ## Note
 Here is a good video how I2C protocols work.
 https://www.youtube.com/watch?v=CAvawEcxoPU&t=14s. It will explain you how _fake_slave function works.

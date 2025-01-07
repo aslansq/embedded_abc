@@ -112,6 +112,9 @@ static void _i2c2_io_init(void) {
 static void _i2c2_periph_init(void) {
 	// enable clock
 	RCC->APB1ENR |= RCC_APB1ENR_I2C2EN;
+	// i2c register definitions starts from rm0091 684
+	// it is good to disable periph before you are configuring it, if you can
+	// because some config register may not let you otherwise
 	// disable i2c
 	I2C2->CR1 &= ~I2C_CR1_PE;
 	// 7 bit addressing mode
@@ -120,7 +123,9 @@ static void _i2c2_periph_init(void) {
 	I2C2->CR2 &= I2C_CR2_NBYTES;
 	I2C2->CR2 |= ((uint32_t)2 << I2C_CR2_NBYTES_Pos);
 	// standard 100kb/s. I used cubemx to generate this number
+	// too much calculations in reference manual
 	I2C2->TIMINGR = 0x10805D88;
+	// enable back periph
 	I2C2->CR1 |= I2C_CR1_PE;
 }
 

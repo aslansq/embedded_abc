@@ -15,8 +15,9 @@ fi
 
 if [ -f ${STM32_Programmer_CLI_PATH}/STM32_Programmer_CLI ]
 then
+    echo STM32_Programmer_CLI --connect port=SWD mode=UR reset=HWrst --download ${demoElf}
     ${STM32_Programmer_CLI_PATH}/STM32_Programmer_CLI --connect port=SWD mode=UR reset=HWrst --download ${demoElf}
 else
-    echoerr "Could not find flashing tool ${STM32_Programmer_CLI_PATH}/STM32_Programmer_CLI"
+    echoerr "Could not find flashing tool STM32_Programmer_CLI"
     ungracefulExit
 fi

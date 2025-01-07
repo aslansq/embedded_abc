@@ -27,11 +27,25 @@ This is for educational purposes. Main purpose is demonstrating simple communica
 * Install GNU make utility.
 * Install CMake utility.
 * Give execute permission files under shell. ```chmod +x shell/*.sh```
+* After all satisfied, run configure.sh. configure.sh checks prerequisities.
 
 ## Building
 ```
 ./shell/rebuild_all.sh
 ```
+
+### Tip
+If you have CubeMx installed already, then you could create an environment variable STM32_Programmer_CLI_PATH. It will allow you flash firmware directly to the board.  
+  
+Example path of mine and how to flash using script.
+```
+export STM32_Programmer_CLI_PATH=/opt/st/stm32cubeide_1.17.0/plugins/com.st.stm32cube.ide.mcu.externaltools.cubeprogrammer.linux64_2.2.0.202409170845/tools/bin
+```
+```
+./shell/rebuild_download.sh 02_gpio_out
+
+```
+
 ## Design Choices
 * Every demo should be in a single main.c file
 * Every demo should be compilable by it is own. No shared resources between demos.
