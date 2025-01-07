@@ -1,4 +1,4 @@
-## 02_gpio_out
+# 02_gpio_out
 
 This demo implements LEDs configuration on the board. There are two leds; blue and yellow.
 
