@@ -7,13 +7,13 @@ This repository contains minimal demos of stm32f0discovery's peripherals with CM
 
 ## Why?
 <mark>It will help you to make connection between datasheet and physical hardware.</mark>
-This is for educational purposes. Main purpose is learning simple communication interfaces. If I have enough time, I ll put more peripherals other than communication.
+This is for educational purposes. Main purpose is demonstrating simple communication interfaces. If I have enough time, I ll put more peripherals other than communication.
 
 |Goal|State|Demo|Description|
 |-|-|-|-|
 |Spi|&#x2713;|[03_spi_bit_bang](./03_spi_bit_bang/README.md)|Simplest way to push data with SPI|
 |Uart|&#x2713;|[04_uart](./04_uart/README.md)|Pushing data with UART|
-|I2C|&#x2713;|[05_i2c](./05_i2c/README.md)|Pushing data to I2C bus(note: slave is faked)|
+|I2C|&#x2713;|[05_i2c](./05_i2c/README.md)|Pushing data to I2C bus(with fake slave)|
 
 |More|State|Demo|Description|
 |-|-|-|-|
