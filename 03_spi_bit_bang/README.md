@@ -1,4 +1,4 @@
-## 03_spi_bit_bang
+# 03_spi_bit_bang
 
 This demo implements simplest SPI bit bang. Configuration:
 * STM32 is Master

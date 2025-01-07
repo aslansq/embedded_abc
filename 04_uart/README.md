@@ -1,4 +1,4 @@
-## 04_uart
+# 04_uart
 
 In this demo USART1 Tx configured in UART mode. See the configuration parameremeters in Figure PicoScopeCfg.  
 Steps:
@@ -23,3 +23,5 @@ Figure PicoScopeLog: Embedded abc :)
 ## Abbreviations and Acronyms
 |Short form|Description|
 |-|-|
+|Tx|Transmitter|
+|Rx|Receiver|

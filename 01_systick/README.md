@@ -1,4 +1,4 @@
-## 01_systick
+# 01_systick
 
 This demo implements interrupt of systick timer. Interrupt occurs every 1 millisecond.
 
