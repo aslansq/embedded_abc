@@ -21,6 +21,7 @@ This is for educational purposes. Main purpose is demonstrating simple communica
 |Systick|&#x2713;|[01_systick](./01_systick/README.md)|Systick 1 ms interrupt configuration|
 |Gpio Out|&#x2713;|[02_gpio_out](./02_gpio_out/README.md)|Explained how board led configuration is done|
 |Gpio In|&#x2713;|[06_gpio_in](./06_gpio_in/README.md)|Explained board button configuration|
+|Pwm|&#x2713;|[07_pwm](./07_pwm/README.md)|Pwm configuration with on board leds|
 
 ## Prerequisites
 * Install(download and unzip path of your choice) [arm-none-eabi-gcc](https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm/downloads).
@@ -72,3 +73,4 @@ See the references under doc folder.
 |SPI|Serial Peripheral Interface|
 |UART|Universal Asynchronous Receiver/Transmitter|
 |I2C|Inter-Integrated Circuit Protocol|
+|PWM|Pulse Width Modulation|

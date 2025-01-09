@@ -2,8 +2,6 @@
 #include "stm32f0xx.h"
 #include <assert.h>
 
-#define CORE_CLK_FREQ (48000000u) // 48MHz
-
 // See 00_core_clk for more details of this implementation
 // SystemInit is called before main
 // called from startup_stm32f051r8tx.s
@@ -87,9 +85,82 @@ void SystemInit(void) {
 	RCC->CFGR = tmpreg;
 }
 
+static void _pwm_io_init(void) {
+	// ld4 : PC8 blue
+	// ld3 : PC9 yellow
+	// So Cortex-M0 cares about power consumption due that clock are disabled by default.
+	// We need to enable GPIOC clock. RM0091 page 122
+	RCC->AHBENR |= RCC_AHBENR_GPIOCEN;
+	// see all of definitions of gpio register at RM0091 page 158
+	// set mode to alternate(IMPORTANT)
+	GPIOC->MODER &= ~(GPIO_MODER_MODER8 | GPIO_MODER_MODER9);
+	GPIOC->MODER |= GPIO_MODER_MODER8_1 | GPIO_MODER_MODER9_1;
+	// set output type to push-pull
+	GPIOC->OTYPER &= ~(GPIO_OTYPER_OT_8 | GPIO_OTYPER_OT_9);
+	// set output speed to high
+	GPIOC->OSPEEDR |= GPIO_OSPEEDR_OSPEEDR8 | GPIO_OSPEEDR_OSPEEDR9;
+	// set pull-up/pull-down to no pull-up no pull-down
+	GPIOC->PUPDR &= ~(GPIO_PUPDR_PUPDR8 | GPIO_PUPDR_PUPDR9);
+}
+
+// this functions will configure a 10kHz pwm
+static void _pwm_periph_init(void) {
+	// enable the clock
+	RCC->APB1ENR |= RCC_APB1ENR_TIM3EN;
+	// no clock division
+	TIM3->CR1 &= ~TIM_CR1_CKD;
+	TIM3->PSC = 47;
+	// auto reload register, it will count up to this value
+	TIM3->ARR = 1000;
+
+	// pwm mode 1 selected
+	TIM3->CCMR2 |= TIM_CCMR2_OC3M_1 | TIM_CCMR2_OC3M_2 | TIM_CCMR2_OC3PE;
+	TIM3->CCMR2 |= TIM_CCMR2_OC4M_1 | TIM_CCMR2_OC4M_2 | TIM_CCMR2_OC4PE;
+
+	// capture compare enable
+	TIM3->CCER |= TIM_CCER_CC3E | TIM_CCER_CC4E;
+
+	// arpe and ug necessary so config takes effect
+	TIM3->CR1 |= TIM_CR1_ARPE;
+	TIM3->EGR |= TIM_EGR_UG;
+	// enable the timer
+	TIM3->CR1 |= TIM_CR1_CEN;
+}
+
+static void _pwm_set_duty_cycle(uint8_t percentage) {
+	uint16_t dutyVal = (uint16_t)((TIM3->ARR * percentage) / 100.0);
+	TIM3->CCR3 = dutyVal;
+	TIM3->CCR4 = dutyVal;
+}
 
 int main(void) {
+	_pwm_io_init();
+	_pwm_periph_init();
+
+	uint8_t brightness = 0;
+	uint8_t brightnessDir = 0;
+
 	while(1) {
+		// heartbeat
+		if(brightnessDir == 0) { // decrease
+			if(((int16_t)brightness - 1) < 0) {
+				// change direction when you could not decrease anymore
+				brightnessDir = 1;
+			} else {
+				brightness--;
+			}
+		} else { // increase
+			if((brightness+1) > 100) {
+				// change direction when you could not increase anymore
+				brightnessDir = 0;
+			} else {
+				brightness++;
+			}
+		}
+		for(int i = 0; i < 30000; ++i) {
+			__asm__("nop");
+		}
+		_pwm_set_duty_cycle(brightness);
 	}
 }
 
