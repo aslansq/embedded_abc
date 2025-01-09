@@ -20,6 +20,7 @@ This is for educational purposes. Main purpose is demonstrating simple communica
 |Core Clock|&#x2713;|[00_core_clock](./00_core_clk/README.md)|Well to be able to do anything clocks needs to be setup. Core and bus clock configurations and core clock speed test|
 |Systick|&#x2713;|[01_systick](./01_systick/README.md)|Systick 1 ms interrupt configuration|
 |Gpio Out|&#x2713;|[02_gpio_out](./02_gpio_out/README.md)|Explained how board led configuration is done|
+|Gpio In|&#x2713;|[06_gpio_in](./06_gpio_in/README.md)|Explained board button configuration|
 
 ## Prerequisites
 * Install(download and unzip path of your choice) [arm-none-eabi-gcc](https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm/downloads).
