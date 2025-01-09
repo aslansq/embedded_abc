@@ -7,7 +7,8 @@ demos="\
 03_spi_bit_bang \
 04_uart \
 05_i2c \
-06_gpio_in"
+06_gpio_in \
+07_pwm"
 
 getMacros()
 {
