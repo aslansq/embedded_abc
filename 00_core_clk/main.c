@@ -1,7 +1,7 @@
 #define STM32F051x8
 #include "stm32f0xx.h"
 #include <assert.h>
-
+ıakeimukalmeikalmkeiu
 // SystemInit is called before main
 // called from startup_stm32f051r8tx.s
 void SystemInit(void) {
